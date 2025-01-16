@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Calorías</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    .calculator {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      margin: auto;
+    }
+    .calculator input,
+    .calculator select,
+    .calculator button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      text-align: center;
+      color: #007BFF;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>Calculadora de Calorías</h2>
+    <label for="age">Edad (años):</label>
+    <input type="number" id="age" placeholder="Ingresa tu edad" required>
+
+    <label for="weight">Peso (kg):</label>
+    <input type="number" id="weight" placeholder="Ingresa tu peso" required>
+
+    <label for="height">Altura (cm):</label>
+    <input type="number" id="height" placeholder="Ingresa tu altura" required>
+
+    <label for="activity">Nivel de actividad:</label>
+    <select id="activity">
+      <option value="1.2">Sedentario</option>
+      <option value="1.375">Actividad ligera</option>
+      <option value="1.55">Actividad moderada</option>
+      <option value="1.725">Actividad intensa</option>
+      <option value="1.9">Muy intensa</option>
+    </select>
+
+    <button onclick="calculateCalories()">Calcular calorías</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateCalories() {
+      // Obtén los valores de los campos
+      const age = parseInt(document.getElementById('age').value);
+      const weight = parseFloat(document.getElementById('weight').value);
+      const height = parseFloat(document.getElementById('height').value);
+      const activity = parseFloat(document.getElementById('activity').value);
+
+      if (isNaN(age) || isNaN(weight) || isNaN(height)) {
+        document.getElementById('result').innerText = "Por favor, completa todos los campos correctamente.";
+        return;
+      }
+
+      // Fórmula de Harris-Benedict para calcular TMB
+      const bmr = 10 * weight + 6.25 * height - 5 * age + 5; // Para hombres
+      // Para mujeres usa: const bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+
+      // Calcula el gasto calórico diario
+      const dailyCalories = Math.round(bmr * activity);
+
+      // Muestra el resultado
+      document.getElementById('result').innerText = `Tu gasto calórico diario estimado es de ${dailyCalories} calorías.`;
+    }
+  </script>
+</body>
+</html>
